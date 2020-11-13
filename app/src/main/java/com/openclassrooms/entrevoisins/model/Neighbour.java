@@ -1,11 +1,14 @@
 package com.openclassrooms.entrevoisins.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class Neighbour implements Parcelable {
 
     /** Identifier */
     private long id;
@@ -25,6 +28,9 @@ public class Neighbour {
     /** About me */
     private String aboutMe;
 
+    /** Is Favorite */
+    private boolean favoris;
+
     /**
      * Constructor
      * @param id
@@ -40,6 +46,27 @@ public class Neighbour {
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
     }
+
+    protected Neighbour(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        avatarUrl = in.readString();
+        address = in.readString();
+        phoneNumber = in.readString();
+        aboutMe = in.readString();
+    }
+
+    public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
+        @Override
+        public Neighbour createFromParcel(Parcel in) {
+            return new Neighbour(in);
+        }
+
+        @Override
+        public Neighbour[] newArray(int size) {
+            return new Neighbour[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -89,6 +116,13 @@ public class Neighbour {
         this.aboutMe = aboutMe;
     }
 
+    public boolean isFavorite() {return favoris;}
+
+    public void setFavorite(boolean favoris) {
+        this.favoris = favoris;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,5 +134,20 @@ public class Neighbour {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(avatarUrl);
+        parcel.writeString(address);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(aboutMe);
     }
 }

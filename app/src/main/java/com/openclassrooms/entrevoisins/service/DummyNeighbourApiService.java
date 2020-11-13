@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return neighbours;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -35,5 +37,26 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
+    }
+
+
+    @Override
+    public void toggleFavorite(Neighbour neighbour) {
+        //on set/unset le neighbour dans les favs
+        boolean fav = !neighbour.isFavorite();
+        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(fav);
+        neighbour.setFavorite(fav);
+    }
+
+    @Override
+    public List<Neighbour> getFavoriteNeighbours() {
+        List<Neighbour> favorites = new ArrayList<>();
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.isFavorite()) {
+                favorites.add(neighbour);
+            }
+        }
+        return favorites;
+
     }
 }
