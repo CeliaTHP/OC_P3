@@ -1,6 +1,9 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.content.Intent;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,4 +62,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return favorites;
 
     }
+
+
 }

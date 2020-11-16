@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,12 +48,13 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_details);
+        setContentView(R.layout.activity_neighbour_details);
         ButterKnife.bind(this);
         initViews();
+        setStar();
+
 
         neighbourApiService = DI.getNeighbourApiService();
-
 
         /* Add Neighbour in favorites*/
 
@@ -63,11 +65,11 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 String removedFromFav = myNeighbour.getName() + " a été retiré des favoris";
 
                 if (!myNeighbour.isFavorite())
-                Toast.makeText(getApplicationContext(), addedToFav,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(getApplicationContext(),removedFromFav ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
                 neighbourApiService.toggleFavorite(myNeighbour);
-                //set star yellow if favorite
+                setStar();
             }
         });
 
@@ -82,11 +84,13 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
     }
 
+
     private void initViews() {
 
         Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
 
         myNeighbour = neighbour;
+        Log.d("TAG",myNeighbour.toString());
 
         nameOnPicText.setText(neighbour.getName());
         nameText.setText(neighbour.getName());
@@ -95,11 +99,18 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         websiteText.setText(getString(R.string.details_neighbour_site) + neighbour.getName()); //add www/+name
         bioText.setText(neighbour.getAboutMe());
 
+
         Glide.with(this)
                 .load(neighbour.getAvatarUrl())
                 .into(avatarView);
 
+    }
 
+    private void setStar() {
+        if (myNeighbour.isFavorite())
+            favButton.setImageResource(R.drawable.ic_star_yellow);
+        else
+            favButton.setImageResource(R.drawable.ic_star_not_full);
     }
 
 

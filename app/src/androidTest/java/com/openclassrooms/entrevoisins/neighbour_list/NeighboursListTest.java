@@ -16,9 +16,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -68,4 +71,17 @@ public class NeighboursListTest {
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
     }
+
+
+    @Test
+    public void neighbourDetailsActivity(){
+
+        //vérifier que le clic sur un item envoie bien vers la page des détails
+
+        onView(withId(R.id.contentParent)).perform(click());
+        onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
+
+
+    }
+
 }

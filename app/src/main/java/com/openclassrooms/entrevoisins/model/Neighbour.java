@@ -29,7 +29,7 @@ public class Neighbour implements Parcelable {
     private String aboutMe;
 
     /** Is Favorite */
-    private boolean favoris;
+    private boolean isFavorite;
 
     /**
      * Constructor
@@ -116,12 +116,19 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    public boolean isFavorite() {return favoris;}
+    public boolean isFavorite() {return isFavorite;}
 
     public void setFavorite(boolean favoris) {
-        this.favoris = favoris;
+        this.isFavorite = favoris;
     }
 
+    @Override
+    public String toString() {
+        return "Neighbour{" +
+                "name='" + name + '\'' +
+                ", isFavorite=" + isFavorite +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.nio.file.attribute.FileAttributeView;
+
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
@@ -13,20 +15,23 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * getItem is called to instantiate the fragment for the given page.
+     *
      * @param position
      * @return
      */
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+        return NeighbourFragment.newInstance(position);
+
     }
 
     /**
      * get the number of pages
+     *
      * @return
      */
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }
