@@ -61,7 +61,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             public void onClick(View view) {
                 onItemClickListener.onItemClick(holder.getAdapterPosition());
             }
-        }); 
+        });
+
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +90,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
         }
     }
 
