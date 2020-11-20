@@ -34,6 +34,9 @@ public interface NeighbourApiService {
      */
     void createNeighbour(Neighbour neighbour);
 
+    void addFavorite(Neighbour neighbour);
 
-    void toggleFavorite(Neighbour neighbour);
+    void removeFavorite(Neighbour neighbour);
+
+    String checkIfNeighbourIsFav(Neighbour neighbour) ;
 }

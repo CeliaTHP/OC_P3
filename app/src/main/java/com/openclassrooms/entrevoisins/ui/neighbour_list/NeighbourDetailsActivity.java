@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,8 +39,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     @BindView(R.id.details_neighbour_pic)
     ImageView avatarView;
 
-    private Neighbour myNeighbour;
-
     private NeighbourApiService neighbourApiService;
 
 
@@ -50,47 +47,49 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neighbour_details);
         ButterKnife.bind(this);
-        initViews();
-        setStar();
-
-
         neighbourApiService = DI.getNeighbourApiService();
 
-        /* Add Neighbour in favorites*/
-
-        favButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String addedToFav = myNeighbour.getName() + " a été ajouté aux favoris";
-                String removedFromFav = myNeighbour.getName() + " a été retiré des favoris";
-
-                if (!myNeighbour.isFavorite())
-                    Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
-                neighbourApiService.toggleFavorite(myNeighbour);
-                setStar();
-            }
-        });
-
-
-        //ONCLICK BACK
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        initViews();
+        setOnClickStar();
+        setBackButton();
 
     }
 
 
+    //ADD OR REMOVE NEIGHBOUR FROM FAVORITELIST & SET THE CORRESPONDING STAR
+    private void setOnClickStar() {
+        Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
+        neighbourApiService.checkIfNeighbourIsFav(neighbour);
+
+        if (neighbourApiService.getFavoriteNeighbours().contains(neighbour))
+            favButton.setImageResource(R.drawable.ic_star_full);
+
+        favButton.setOnClickListener(view -> {
+
+            String addedToFav = neighbour.getName() + " a été ajouté aux favoris";
+                String removedFromFav = neighbour.getName() + " a été retiré des favoris";
+
+
+            if (!neighbourApiService.getFavoriteNeighbours().contains(neighbour)) {
+                Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
+                favButton.setImageResource(R.drawable.ic_star_full);
+                neighbourApiService.addFavorite(neighbour);
+
+            } else {
+                Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
+                favButton.setImageResource(R.drawable.ic_star_not_full);
+                neighbourApiService.removeFavorite(neighbour);
+            }
+            Log.d("TAG ",neighbourApiService.checkIfNeighbourIsFav(neighbour));
+        });
+
+    }
+
+    //SET NEIGHBOURS INFOS FOR VIEW
     private void initViews() {
 
+        neighbourApiService.getFavoriteNeighbours();
         Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
-
-        myNeighbour = neighbour;
-        Log.d("TAG",myNeighbour.toString());
 
         nameOnPicText.setText(neighbour.getName());
         nameText.setText(neighbour.getName());
@@ -99,18 +98,18 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         websiteText.setText(getString(R.string.details_neighbour_site) + neighbour.getName()); //add www/+name
         bioText.setText(neighbour.getAboutMe());
 
-
         Glide.with(this)
                 .load(neighbour.getAvatarUrl())
                 .into(avatarView);
-
     }
 
-    private void setStar() {
-        if (myNeighbour.isFavorite())
-            favButton.setImageResource(R.drawable.ic_star_yellow);
-        else
-            favButton.setImageResource(R.drawable.ic_star_not_full);
+
+    //BACK TO PREVIOUS ACTIVITY
+    private void setBackButton() {
+        backArrow.setOnClickListener(view -> {
+                finish();
+        });
+
     }
 
 

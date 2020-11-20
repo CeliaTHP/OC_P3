@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourDetailsActivity;
@@ -11,9 +12,10 @@ import java.util.List;
 /**
  * Dummy mock for the Api
  */
-public class DummyNeighbourApiService implements  NeighbourApiService {
+public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
+    private List<Neighbour> favorites = new ArrayList<>();
 
 
     /**
@@ -35,6 +37,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     /**
      * {@inheritDoc}
+     *
      * @param neighbour
      */
     @Override
@@ -44,23 +47,32 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
 
     @Override
-    public void toggleFavorite(Neighbour neighbour) {
-        //on set/unset le neighbour dans les favs
-        boolean fav = !neighbour.isFavorite();
-        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(fav);
-        neighbour.setFavorite(fav);
+    public void addFavorite(Neighbour neighbour) {
+        //on ajoute le voisin dans la liste des favoris
+        if (!favorites.contains(neighbour)) {
+            favorites.add(neighbour);
+        }
+    }
+
+    @Override
+    public void removeFavorite(Neighbour neighbour) {
+        //on supprime le voisin dans la liste des favoris
+        if (favorites.contains(neighbour)) {
+            favorites.remove(neighbour);
+        }
     }
 
     @Override
     public List<Neighbour> getFavoriteNeighbours() {
-        List<Neighbour> favorites = new ArrayList<>();
-        for (Neighbour neighbour : neighbours) {
-            if (neighbour.isFavorite()) {
-                favorites.add(neighbour);
-            }
-        }
         return favorites;
+    }
 
+    @Override
+    public String checkIfNeighbourIsFav(Neighbour neighbour) {
+        if (favorites.contains(neighbour))
+           return (neighbour.getName().toString() + " is favorite");
+        else
+            return (neighbour.getName().toString() + " is not favorite");
     }
 
 
