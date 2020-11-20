@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.ViewPagerActions.scrollRight;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -26,6 +27,15 @@ import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAsserti
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
+/*○ test vérifiant que lorsqu’on clique sur un élément de la liste, l’écran de
+détails est bien lancé ;
+○ test vérifiant qu’au démarrage de ce nouvel écran, le TextView indiquant
+le nom de l’utilisateur en question est bien rempli ;
+○ test vérifiant qu’au clic sur le bouton de suppression, la liste d’utilisateurs
+compte bien un utilisateur en moins ;
+○ test vérifiant que l’onglet Favoris n’affiche que les voisins marqués comme
+favoris.
+● Phase 3 : Création d’un test unitaire pour chaque fonctionnalité. OK */
 
 /**
  * Test class for list of neighbours
@@ -73,15 +83,5 @@ public class NeighboursListTest {
     }
 
 
-    @Test
-    public void neighbourDetailsActivity(){
-
-        //vérifier que le clic sur un item envoie bien vers la page des détails
-
-        onView(withId(R.id.contentParent)).perform(click());
-        onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
-
-
-    }
 
 }

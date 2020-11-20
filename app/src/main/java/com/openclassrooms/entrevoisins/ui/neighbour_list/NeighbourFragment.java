@@ -101,7 +101,7 @@ public class NeighbourFragment extends Fragment implements OnItemClickListener {
         Intent intent = new Intent(getActivity(), NeighbourDetailsActivity.class);
         intent.putExtra("neighbour", mNeighbours.get(position));
         startActivity(intent);
-        Log.d("TAG",mNeighbours.get(position).toString());
+        Log.d("TAG","CLICKED ON "+mNeighbours.get(position).getName());
     }
 
 }
