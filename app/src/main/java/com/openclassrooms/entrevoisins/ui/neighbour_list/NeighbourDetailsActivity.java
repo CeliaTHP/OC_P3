@@ -67,7 +67,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         favButton.setOnClickListener(view -> {
 
             String addedToFav = neighbour.getName() + " a été ajouté aux favoris";
-                String removedFromFav = neighbour.getName() + " a été retiré des favoris";
+            String removedFromFav = neighbour.getName() + " a été retiré des favoris";
 
 
             if (!neighbourApiService.getFavoriteNeighbours().contains(neighbour)) {
@@ -80,7 +80,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 favButton.setImageResource(R.drawable.ic_star_not_full);
                 neighbourApiService.removeFavorite(neighbour);
             }
-            Log.d("TAG ",neighbourApiService.checkIfNeighbourIsFav(neighbour));
+            Log.d("TAG ", neighbourApiService.checkIfNeighbourIsFav(neighbour));
         });
 
     }
@@ -107,7 +107,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     //BACK TO PREVIOUS ACTIVITY
     private void setBackButton() {
         backArrow.setOnClickListener(view -> {
-                finish();
+            finish();
         });
 
     }
