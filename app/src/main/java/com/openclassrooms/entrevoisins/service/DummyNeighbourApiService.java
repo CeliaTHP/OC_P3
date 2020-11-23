@@ -69,13 +69,4 @@ public class DummyNeighbourApiService implements NeighbourApiService {
         return favorites;
     }
 
-    @Override
-    public String checkIfNeighbourIsFav(Neighbour neighbour) {
-        if (favorites.contains(neighbour))
-           return (neighbour.getName().toString() + " is favorite");
-        else
-            return (neighbour.getName().toString() + " is not favorite");
-    }
-
-
 }

@@ -59,10 +59,11 @@ public class NeighbourServiceTest {
     @Test
     public void getFavoriteNeighboursWithSuccess() {
         //works with getNeighbours but not with getFavoriteNeighbours
-        List<Neighbour> favoriteNeighbours = service.getFavoriteNeighbours();
-        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
+        Neighbour neighbour = service.getNeighbours().get(0);
+        service.addFavorite(neighbour);
+        neighbour.setFavorite(true);
         //assert that our favorite list contains all favorite neighbours
-        assertThat(favoriteNeighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedFavoriteNeighbours.toArray()));
+        assertFalse(service.getFavoriteNeighbours().isEmpty());
     }
 
     @Test

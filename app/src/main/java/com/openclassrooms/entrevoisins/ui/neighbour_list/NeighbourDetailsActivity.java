@@ -59,43 +59,41 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     //ADD OR REMOVE NEIGHBOUR FROM FAVORITELIST & SET THE CORRESPONDING STAR
     private void setOnClickStar() {
         Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
-        neighbourApiService.checkIfNeighbourIsFav(neighbour);
 
-        if (neighbourApiService.getFavoriteNeighbours().contains(neighbour))
+        if (neighbourApiService.getFavoriteNeighbours().contains(neighbour)) //isfavoris
             favButton.setImageResource(R.drawable.ic_star_full);
 
         favButton.setOnClickListener(view -> {
-
-            String addedToFav = neighbour.getName() + " a été ajouté aux favoris";
-            String removedFromFav = neighbour.getName() + " a été retiré des favoris";
-
-
-            if (!neighbourApiService.getFavoriteNeighbours().contains(neighbour)) {
+            String addedToFav = neighbour.getName() + " a été ajouté aux favoris"; //strings.xml
+            String removedFromFav = neighbour.getName() + " a été retiré des favoris"; //strings.xml
+            if (!neighbourApiService.getFavoriteNeighbours().contains(neighbour)) { //isFavoris
                 Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
                 favButton.setImageResource(R.drawable.ic_star_full);
                 neighbourApiService.addFavorite(neighbour);
-
+                neighbour.setFavorite(true);
             } else {
                 Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
                 favButton.setImageResource(R.drawable.ic_star_not_full);
                 neighbourApiService.removeFavorite(neighbour);
+                neighbour.setFavorite(false);
+                //split en deux méthodes
             }
-            Log.d("TAG ", neighbourApiService.checkIfNeighbourIsFav(neighbour));
         });
 
     }
 
-    //SET NEIGHBOURS INFOS FOR VIEW
+    /**
+     * Set neighbours info to view
+     */
     private void initViews() {
 
         neighbourApiService.getFavoriteNeighbours();
         Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
-
         nameOnPicText.setText(neighbour.getName());
         nameText.setText(neighbour.getName());
         addressText.setText(neighbour.getAddress());
         contactText.setText(neighbour.getPhoneNumber());
-        websiteText.setText(getString(R.string.details_neighbour_site) + neighbour.getName()); //add www/+name
+        websiteText.setText(getString(R.string.details_neighbour_site) + neighbour.getName()); //WARNING
         bioText.setText(neighbour.getAboutMe());
 
         Glide.with(this)
@@ -103,13 +101,11 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 .into(avatarView);
     }
 
-
     //BACK TO PREVIOUS ACTIVITY
     private void setBackButton() {
         backArrow.setOnClickListener(view -> {
             finish();
         });
-
     }
 
 
