@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JUnit4.class)
 public class NeighbourServiceTest {
 
-
     private NeighbourApiService service;
 
     @Before
@@ -31,6 +30,9 @@ public class NeighbourServiceTest {
         service = DI.getNewInstanceApiService();
     }
 
+    /**
+     * Get the neighbour list
+     */
     @Test
     public void getNeighboursWithSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
@@ -39,6 +41,9 @@ public class NeighbourServiceTest {
         assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 
+    /**
+     * Delete a neighbour
+     */
     @Test
     public void deleteNeighbourWithSuccess() {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
@@ -47,6 +52,9 @@ public class NeighbourServiceTest {
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
 
+    /**
+     * Create a neighbour
+     */
     @Test
     public void createNeighbour() {
         Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
@@ -56,16 +64,21 @@ public class NeighbourServiceTest {
         assertTrue(service.getNeighbours().contains(neighbour));
     }
 
+    /**
+     * Get the favorite neighbour list
+     */
     @Test
     public void getFavoriteNeighboursWithSuccess() {
         //works with getNeighbours but not with getFavoriteNeighbours
         Neighbour neighbour = service.getNeighbours().get(0);
         service.addFavorite(neighbour);
-        neighbour.setFavorite(true);
         //assert that our favorite list contains all favorite neighbours
         assertFalse(service.getFavoriteNeighbours().isEmpty());
     }
 
+    /**
+     * Add a neighbour to favorite list
+     */
     @Test
     public void addNeighbourFavorite() {
         Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
@@ -75,6 +88,9 @@ public class NeighbourServiceTest {
         assertEquals(1, service.getFavoriteNeighbours().size());
     }
 
+    /**
+     * Delete a favorite neighbour
+     */
     @Test
     public void deleteNeighbourFavorite() {
         Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",

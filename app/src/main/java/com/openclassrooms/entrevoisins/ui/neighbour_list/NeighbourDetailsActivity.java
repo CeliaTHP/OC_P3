@@ -41,7 +41,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
     private NeighbourApiService neighbourApiService;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,48 +51,54 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         initViews();
         setOnClickStar();
         setBackButton();
-
     }
 
-
-    //ADD OR REMOVE NEIGHBOUR FROM FAVORITELIST & SET THE CORRESPONDING STAR
+    /**
+     * Add or remove neighbour to from our favorite list & set the corresponding star
+     */
     private void setOnClickStar() {
         Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
 
-        if (neighbourApiService.getFavoriteNeighbours().contains(neighbour)) //isfavoris
+        if (neighbourApiService.isFavorite(neighbour))
             favButton.setImageResource(R.drawable.ic_star_full);
 
         favButton.setOnClickListener(view -> {
-            String addedToFav = neighbour.getName() + " a été ajouté aux favoris"; //strings.xml
-            String removedFromFav = neighbour.getName() + " a été retiré des favoris"; //strings.xml
-            if (!neighbourApiService.getFavoriteNeighbours().contains(neighbour)) { //isFavoris
-                Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
+
+            if (!neighbourApiService.isFavorite(neighbour)) {
                 favButton.setImageResource(R.drawable.ic_star_full);
                 neighbourApiService.addFavorite(neighbour);
-                neighbour.setFavorite(true);
             } else {
-                Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
                 favButton.setImageResource(R.drawable.ic_star_not_full);
                 neighbourApiService.removeFavorite(neighbour);
-                neighbour.setFavorite(false);
-                //split en deux méthodes
             }
+            setToast(neighbour);
         });
+    }
 
+    /**
+     * Set the corresponding toast after click
+     */
+    private void setToast(Neighbour neighbour) {
+        String addedToFav = neighbour.getName() + getString(R.string.addedToFav);
+        String removedFromFav = neighbour.getName() + getString(R.string.removedFromFav);
+        if (neighbourApiService.isFavorite(neighbour))
+            Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Set neighbours info to view
      */
     private void initViews() {
-
         neighbourApiService.getFavoriteNeighbours();
         Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
         nameOnPicText.setText(neighbour.getName());
         nameText.setText(neighbour.getName());
         addressText.setText(neighbour.getAddress());
         contactText.setText(neighbour.getPhoneNumber());
-        websiteText.setText(getString(R.string.details_neighbour_site) + neighbour.getName()); //WARNING
+        String website = getString(R.string.details_neighbour_site) + neighbour.getName();
+        websiteText.setText(website);
         bioText.setText(neighbour.getAboutMe());
 
         Glide.with(this)
@@ -101,12 +106,13 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 .into(avatarView);
     }
 
-    //BACK TO PREVIOUS ACTIVITY
+    /**
+     * Set the back arrow button
+     */
     private void setBackButton() {
         backArrow.setOnClickListener(view -> {
             finish();
         });
     }
-
 
 }

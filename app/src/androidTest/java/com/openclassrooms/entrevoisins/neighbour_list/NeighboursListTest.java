@@ -60,7 +60,7 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed()))
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -70,7 +70,7 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
@@ -78,27 +78,37 @@ public class NeighboursListTest {
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT - 1));
     }
 
-    @Test
-    public void detailsActivityDisplaysNeighbourName() {
-        Neighbour neighbour = this.neighbourList.get(0);
-        //click on item at position 0
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        //check if displayed name matches with neighbour's name
-        onView(withId(R.id.details_neighbour_bio_name)).check(matches(withText(neighbour.getName())));
-    }
 
+    /**
+     * When we click on an item, the details activity is displayed.
+     */
     @Test
     public void detailsActivityDisplays() {
         //click on item at position 0
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         //check if details screen is launched
         onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
     }
 
+    /**
+     * When we click on an item, the neighbour's name is displayed in the details activity
+     */
+    @Test
+    public void detailsActivityDisplaysNeighbourName() {
+        Neighbour neighbour = this.neighbourList.get(0);
+        //click on item at position 0
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        //check if displayed name matches with neighbour's name
+        onView(withId(R.id.details_neighbour_bio_name)).check(matches(withText(neighbour.getName())));
+    }
+
+    /**
+     * When we swipe on the favorite list, only the favorites neighbours are listed
+     */
     @Test
     public void favoriteTabDisplaysFavoriteNeighbours() {
         //click on item at posiiton 0
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         //check if details screen is launched
         onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
         //click on favorite button to add neighbour to favorites
@@ -108,8 +118,8 @@ public class NeighboursListTest {
         //go to favorite tab
         onView(withId(R.id.container)).perform(scrollRight());
         //check if favoritelist is displayed
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(matches(isDisplayed()));
         //check if our neighbour was added to favorite list
-        onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(1));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));
     }
 }
