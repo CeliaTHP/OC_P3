@@ -69,8 +69,9 @@ public class NeighbourServiceTest {
      */
     @Test
     public void getFavoriteNeighboursWithSuccess() {
-        Neighbour neighbour = service.getNeighbours().get(0);
-        neighbour.setFavorite(true);
+        Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
+                "+33 6 86 57 90 14", "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..");
+        service.toggleFavorite(neighbour);
         //doesn't work with toggle favorite
         //assert that our favorite list contains all favorite neighbours
         assertFalse(service.getFavoriteNeighbours().isEmpty());
