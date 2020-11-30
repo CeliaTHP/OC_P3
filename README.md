@@ -4,8 +4,8 @@
 
 <h3>Prérequis : Assurez vous d'avoir installé Android Studio (disponible ici : https://developer.android.com/studio)</h3>
 
-<img src= "https://github.com/CeliaTHP/OC_P3/blob/main/clonerepo.png?raw=true" alt="reposcreenshot" style="max-width:100%;">
 <h3>1. Récupérer le répertoire github, en le clonant, ou en le téléchargeant</h3>
+<img src= "https://github.com/CeliaTHP/OC_P3/blob/main/clonerepo.png?raw=true" alt="reposcreenshot" style="max-width:100%;">
 
 <h3>2. Au lancement d'Android Studio, sélectionnez "Check out project from version control" et précisez l'url du répertoire </h3>
 <img src= "https://github.com/CeliaTHP/OC_P3/blob/main/androidstudioclone.png" alt="repoandroidstudio" style="max-width:100%;">
