@@ -15,6 +15,8 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -57,10 +59,9 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
      * Add or remove neighbour to from our favorite list & set the corresponding star
      */
     private void setOnClickStar() {
-        Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
+        Neighbour neighbour = Objects.requireNonNull(getIntent().getExtras()).getParcelable("neighbour");
 
-        if (neighbourApiService.isFavorite(neighbour))
-            favButton.setImageResource(R.drawable.ic_star_full);
+
 
         favButton.setOnClickListener(view -> {
 
@@ -71,7 +72,9 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 favButton.setImageResource(R.drawable.ic_star_not_full);
                 neighbourApiService.removeFavorite(neighbour);
             }
-            setToast(neighbour);
+            if (neighbour != null) {
+                setToast(neighbour);
+            }
         });
     }
 
@@ -92,18 +95,22 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
      */
     private void initViews() {
         neighbourApiService.getFavoriteNeighbours();
-        Neighbour neighbour = getIntent().getExtras().getParcelable("neighbour");
-        nameOnPicText.setText(neighbour.getName());
-        nameText.setText(neighbour.getName());
-        addressText.setText(neighbour.getAddress());
-        contactText.setText(neighbour.getPhoneNumber());
-        String website = getString(R.string.details_neighbour_site) + neighbour.getName();
-        websiteText.setText(website);
-        bioText.setText(neighbour.getAboutMe());
+        Neighbour neighbour = Objects.requireNonNull(getIntent().getExtras()).getParcelable("neighbour");
+        if (neighbour != null) {
+            nameOnPicText.setText(neighbour.getName());
+            nameText.setText(neighbour.getName());
+            addressText.setText(neighbour.getAddress());
+            contactText.setText(neighbour.getPhoneNumber());
+            String website = getString(R.string.details_neighbour_site) + neighbour.getName();
+            websiteText.setText(website);
+            bioText.setText(neighbour.getAboutMe());
+            Glide.with(this)
+                    .load(neighbour.getAvatarUrl())
+                    .into(avatarView);
 
-        Glide.with(this)
-                .load(neighbour.getAvatarUrl())
-                .into(avatarView);
+            if (neighbourApiService.isFavorite(neighbour))
+                favButton.setImageResource(R.drawable.ic_star_full);
+        }
     }
 
     /**

@@ -39,7 +39,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
      * {@inheritDoc}
      *
      * @param neighbour
-     */
+     */ 
     @Override
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
