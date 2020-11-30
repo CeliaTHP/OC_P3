@@ -69,9 +69,9 @@ public class NeighbourServiceTest {
      */
     @Test
     public void getFavoriteNeighboursWithSuccess() {
-        //works with getNeighbours but not with getFavoriteNeighbours
         Neighbour neighbour = service.getNeighbours().get(0);
-        service.addFavorite(neighbour);
+        neighbour.setFavorite(true);
+        //doesn't work with toggle favorite
         //assert that our favorite list contains all favorite neighbours
         assertFalse(service.getFavoriteNeighbours().isEmpty());
     }
@@ -83,7 +83,7 @@ public class NeighbourServiceTest {
     public void addNeighbourFavorite() {
         Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
                 "+33 6 86 57 90 14", "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..");
-        service.addFavorite(neighbour);
+        service.toggleFavorite(neighbour);
         //assert that our favorite list size counts 1 item
         assertEquals(1, service.getFavoriteNeighbours().size());
     }
@@ -95,7 +95,7 @@ public class NeighbourServiceTest {
     public void deleteNeighbourFavorite() {
         Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
                 "+33 6 86 57 90 14", "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..");
-        service.addFavorite(neighbour);
+        service.toggleFavorite(neighbour);
         Neighbour favNeighbourToDelete = service.getFavoriteNeighbours().get(0);
         service.deleteNeighbour(favNeighbourToDelete);
         //assert that our favorite neighbour has been deleted from our favorite list

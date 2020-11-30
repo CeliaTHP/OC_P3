@@ -3,7 +3,6 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,8 +13,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +39,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     ImageView avatarView;
 
     private NeighbourApiService neighbourApiService;
+    private Neighbour neighbour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,31 +48,30 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         neighbourApiService = DI.getNeighbourApiService();
 
+        initBundles();
         initViews();
         setOnClickStar();
         setBackButton();
     }
 
     /**
+     * Get Neighbour to initalize view
+     */
+    private void initBundles() {
+        if (getIntent() != null && getIntent().hasExtra("neighbour")) {
+            neighbour = getIntent().getExtras().getParcelable("neighbour");
+        }
+    }
+
+    /**
      * Add or remove neighbour to from our favorite list & set the corresponding star
      */
     private void setOnClickStar() {
-        Neighbour neighbour = Objects.requireNonNull(getIntent().getExtras()).getParcelable("neighbour");
-
-
-
         favButton.setOnClickListener(view -> {
-
-            if (!neighbourApiService.isFavorite(neighbour)) {
-                favButton.setImageResource(R.drawable.ic_star_full);
-                neighbourApiService.addFavorite(neighbour);
-            } else {
-                favButton.setImageResource(R.drawable.ic_star_not_full);
-                neighbourApiService.removeFavorite(neighbour);
-            }
-            if (neighbour != null) {
-                setToast(neighbour);
-            }
+            neighbourApiService.toggleFavorite(neighbour);
+            neighbour.setFavorite(!neighbour.isFavorite());
+            setStar();
+            setToast(neighbour);
         });
     }
 
@@ -82,20 +79,21 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
      * Set the corresponding toast after click
      */
     private void setToast(Neighbour neighbour) {
-        String addedToFav = neighbour.getName() + getString(R.string.addedToFav);
-        String removedFromFav = neighbour.getName() + getString(R.string.removedFromFav);
-        if (neighbourApiService.isFavorite(neighbour))
-            Toast.makeText(getApplicationContext(), addedToFav, Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getApplicationContext(), removedFromFav, Toast.LENGTH_SHORT).show();
+        String addedToFav = getString(R.string.addedToFav, neighbour.getName());
+        String removedFromFav = getString(R.string.removedFromFav, neighbour.getName());
+        String toastText = (neighbour.isFavorite()) ? addedToFav : removedFromFav;
+        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setStar() {
+        int resource = (neighbour.isFavorite() ? R.drawable.ic_star_full : R.drawable.ic_star_not_full);
+        favButton.setImageResource(resource);
     }
 
     /**
      * Set neighbours info to view
      */
     private void initViews() {
-        neighbourApiService.getFavoriteNeighbours();
-        Neighbour neighbour = Objects.requireNonNull(getIntent().getExtras()).getParcelable("neighbour");
         if (neighbour != null) {
             nameOnPicText.setText(neighbour.getName());
             nameText.setText(neighbour.getName());
@@ -107,9 +105,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(neighbour.getAvatarUrl())
                     .into(avatarView);
-
-            if (neighbourApiService.isFavorite(neighbour))
-                favButton.setImageResource(R.drawable.ic_star_full);
+            setStar();
         }
     }
 

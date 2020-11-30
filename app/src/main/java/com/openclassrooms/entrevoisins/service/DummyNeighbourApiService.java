@@ -15,7 +15,6 @@ import java.util.List;
 public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-    private List<Neighbour> favorites = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -31,46 +30,22 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     @Override
     public void deleteNeighbour(Neighbour neighbour) {
         neighbours.remove(neighbour);
-        if(favorites.contains(neighbour))
-            favorites.remove(neighbour);
     }
 
     /**
      * {@inheritDoc}
      *
      * @param neighbour
-     */ 
+     */
     @Override
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
     }
 
-    /**
-     * check if neighbour is favorite
-     */
     @Override
-    public boolean isFavorite(Neighbour neighbour) {
-        return getFavoriteNeighbours().contains(neighbour);
-    }
-
-    /**
-     * add neighbour to favorite list
-     */
-    @Override
-    public void addFavorite(Neighbour neighbour) {
-        if (!favorites.contains(neighbour)) {
-            favorites.add(neighbour);
-        }
-    }
-
-    /**
-     * remove neighbour from favorite list
-     */
-    @Override
-    public void removeFavorite(Neighbour neighbour) {
-        if (favorites.contains(neighbour)) {
-            favorites.remove(neighbour);
-        }
+    public void toggleFavorite(Neighbour neighbour) {
+        int position = neighbours.indexOf(neighbour);
+        neighbours.get(position).setFavorite(!neighbour.isFavorite());
     }
 
     /**
@@ -78,7 +53,12 @@ public class DummyNeighbourApiService implements NeighbourApiService {
      */
     @Override
     public List<Neighbour> getFavoriteNeighbours() {
-        return favorites;
+        List<Neighbour> favoriteList = new ArrayList<>();
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.isFavorite()) {
+                favoriteList.add(neighbour);
+            }
+        }
+        return favoriteList;
     }
-
 }
