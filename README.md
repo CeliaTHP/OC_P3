@@ -1,3 +1,19 @@
+<h1>Entrevoisins</h1>
+
+<h2>Comment lancer l'application ?</h2>
+
+<h3>Prérequis : Assurez vous d'avoir installé Android Studio (disponible ici : https://developer.android.com/studio)</h3>
+
+<img src= "OC_P3/blob/main/clonerepo.png" alt="reposcreenshot" style="max-width:100%;">
+<h3>1. Récupérer le répertoire github, en le clonant, ou en le téléchargeant</h3>
+
+<h3>2. Au lancement d'Android Studio, sélectionnez "Check out project from version control" et précisez l'url du répertoire </h3>
+<img src= "OC_P3/blob/main/androidstudioclone.png" alt="repoandroidstudio" style="max-width:100%;">
+
+<h3>3. Patientez le temps du build (initialisation des fichiers) </h3>
+
+<h3>Une fois tous les dossiers crées, vous pouvez sélectionner un émulateur et lancer l'application (avec la flèche verte) </h3>
+<img src= "OC_P3/blob/main/launchapp.png" alt="launchscreenshot" style="max-width:100%;">
 
 <h1>Projet N°3 : Développez une nouvelle fonctionnalité pour l'application Entrevoisins et testez-la</h1>
 
