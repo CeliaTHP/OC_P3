@@ -13,9 +13,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-/*● Phase 3 : Création d’un test unitaire pour chaque fonctionnalité. OK */
 
 /**
  * Unit test on Neighbour service
@@ -57,8 +57,9 @@ public class NeighbourServiceTest {
      */
     @Test
     public void createNeighbour() {
-        Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
+        Neighbour neighbour = new Neighbour(19, "Zoe", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
                 "+33 6 86 57 90 14", "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..");
+        assertFalse(service.getNeighbours().contains(neighbour));
         service.createNeighbour(neighbour);
         //assert that our neighbour has been added to the neighbour list
         assertTrue(service.getNeighbours().contains(neighbour));
@@ -69,10 +70,11 @@ public class NeighbourServiceTest {
      */
     @Test
     public void getFavoriteNeighboursWithSuccess() {
-       Neighbour neighbour = service.getNeighbours().get(0);
+       Neighbour neighbour = service.getNeighbours().get(5);
+        assertFalse(service.getFavoriteNeighbours().contains(neighbour));
         neighbour.setFavorite(true);
         //assert that our favorite list contains all favorite neighbours
-        assertFalse(service.getFavoriteNeighbours().isEmpty());
+        assertTrue(service.getFavoriteNeighbours().contains(neighbour));
     }
 
     /**
@@ -80,11 +82,11 @@ public class NeighbourServiceTest {
      */
     @Test
     public void addNeighbourFavorite() {
-        Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
-                "+33 6 86 57 90 14", "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..");
+        int favSize = service.getFavoriteNeighbours().size();
+       Neighbour neighbour = service.getNeighbours().get(8);
         service.toggleFavorite(neighbour);
         //assert that our favorite list size counts 1 item
-        assertEquals(1, service.getFavoriteNeighbours().size());
+        assertEquals(favSize + 1, service.getFavoriteNeighbours().size());
     }
 
     /**
@@ -92,10 +94,8 @@ public class NeighbourServiceTest {
      */
     @Test
     public void deleteNeighbourFavorite() {
-        Neighbour neighbour = new Neighbour(1, "Caroline", "https://i.pravatar.cc/350?u=a042581f4e29026704d", "lyon ; 5km",
-                "+33 6 86 57 90 14", "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..");
-        service.toggleFavorite(neighbour);
         Neighbour favNeighbourToDelete = service.getFavoriteNeighbours().get(0);
+        assertTrue(service.getFavoriteNeighbours().contains(favNeighbourToDelete));
         service.deleteNeighbour(favNeighbourToDelete);
         //assert that our favorite neighbour has been deleted from our favorite list
         assertFalse(service.getFavoriteNeighbours().contains(favNeighbourToDelete));

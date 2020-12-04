@@ -98,8 +98,8 @@ public class NeighbourFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(getActivity(), NeighbourDetailsActivity.class);
-        intent.putExtra("neighbour", mNeighbours.get(position));
+        Intent intent = new Intent(getContext(), NeighbourDetailsActivity.class);
+        intent.putExtra(getString(R.string.neighbour_title), mNeighbours.get(position));
         startActivity(intent);
     }
 }

@@ -8,24 +8,13 @@
     android:id="@+id/neighbour_details">
 
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <ImageButton
-                android:id="@+id/back_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_back_arrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/details_neighbour_pic"
@@ -34,7 +23,18 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_account"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="?selectableItemBackground"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -172,7 +172,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -58,8 +58,8 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
      * Get Neighbour to initalize view
      */
     private void initBundles() {
-        if (getIntent() != null && getIntent().hasExtra("neighbour")) {
-            neighbour = getIntent().getExtras().getParcelable("neighbour");
+        if (getIntent() != null && getIntent().getExtras() != null && getIntent().hasExtra(getString(R.string.neighbour_title))) {
+            neighbour = getIntent().getExtras().getParcelable(getString(R.string.neighbour_title));
         }
     }
 
