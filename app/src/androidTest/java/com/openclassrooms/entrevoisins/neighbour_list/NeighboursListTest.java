@@ -107,7 +107,7 @@ public class NeighboursListTest {
      */
     @Test
     public void favoriteTabDisplaysFavoriteNeighbours() {
-        //click on item at posiiton 0
+        //click on item at posititon 0
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         //check if details screen is launched
         onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
@@ -120,6 +120,6 @@ public class NeighboursListTest {
         //check if favoritelist is displayed
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(matches(isDisplayed()));
         //check if our neighbour was added to favorite list
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(2));
     }
 }
