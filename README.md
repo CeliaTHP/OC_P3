@@ -27,7 +27,7 @@ Entrevoisins est une application qui permet d'afficher une liste de voisins et d
   
   <h2>Dans le cadre de l’application :</h2>
 
-<b>Les test unitaires </b> vérifient le bon comportement des méthodes liés à la manipulation de la liste de voisins (création, génération aléatoire, suppression, ajout en favoris).
+<b>Les tests unitaires </b> isolent une seule méthode pour vérifier son comportement, dans le cadre de l'application les méthodes liées à la manipulation de la liste de voisins (création, génération aléatoire, suppression, ajout en favoris).
 
-<b>Les tests d'instrumentation</b> vérifient par une simulation d'interactions avec l'application, que les actions de l'utilisateurs sur la liste, ou sur un voisin correspondent aux consignes de développement.
+<b>Les tests d'instrumentation</b> sont des suites d'instructions assurant le bon fonctionnement de l'application (la liste, ou le fait que les actions sur un voisin correspondent aux consignes de développement).
 
