@@ -12,4 +12,5 @@
     <string name="addedToFav">%1$s a été ajouté.e aux favoris.</string>
     <string name="removedFromFav">%1$s a été retiré.e des favoris.</string>
     <string name="neighbour_title" translatable="false">neighbour</string>
+    <string name="activity_details">Details</string>
 </resources>

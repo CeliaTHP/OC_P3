@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.nio.file.attribute.FileAttributeView;
-
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
@@ -22,7 +20,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return NeighbourFragment.newInstance(position);
-
     }
 
     /**

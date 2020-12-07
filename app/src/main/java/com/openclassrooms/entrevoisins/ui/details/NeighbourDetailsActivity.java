@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.details;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -64,33 +64,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     }
 
     /**
-     * Add or remove neighbour to from our favorite list & set the corresponding star
-     */
-    private void setOnClickStar() {
-        favButton.setOnClickListener(view -> {
-            neighbourApiService.toggleFavorite(neighbour);
-            neighbour.setFavorite(!neighbour.isFavorite());
-            setStar();
-            setToast(neighbour);
-        });
-    }
-
-    /**
-     * Set the corresponding toast after click
-     */
-    private void setToast(Neighbour neighbour) {
-        String addedToFav = getString(R.string.addedToFav, neighbour.getName());
-        String removedFromFav = getString(R.string.removedFromFav, neighbour.getName());
-        String toastText = (neighbour.isFavorite()) ? addedToFav : removedFromFav;
-        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
-    }
-
-    private void setStar() {
-        int resource = (neighbour.isFavorite() ? R.drawable.ic_star_full : R.drawable.ic_star_not_full);
-        favButton.setImageResource(resource);
-    }
-
-    /**
      * Set neighbours info to view
      */
     private void initViews() {
@@ -107,6 +80,36 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                     .into(avatarView);
             setStar();
         }
+    }
+
+    /**
+     * Add or remove neighbour to from our favorite list & set the corresponding star
+     */
+    private void setOnClickStar() {
+        favButton.setOnClickListener(view -> {
+            neighbourApiService.toggleFavorite(neighbour);
+            neighbour.setFavorite(!neighbour.isFavorite());
+            setStar();
+            setToast(neighbour);
+        });
+    }
+
+    /**
+     * Set the corresponding star for neighbour
+     */
+    private void setStar() {
+        int resource = (neighbour.isFavorite() ? R.drawable.ic_star_full : R.drawable.ic_star_not_full);
+        favButton.setImageResource(resource);
+    }
+
+    /**
+     * Set the corresponding toast after click
+     */
+    private void setToast(Neighbour neighbour) {
+        String addedToFav = getString(R.string.addedToFav, neighbour.getName());
+        String removedFromFav = getString(R.string.removedFromFav, neighbour.getName());
+        String toastText = (neighbour.isFavorite()) ? addedToFav : removedFromFav;
+        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
     }
 
     /**
